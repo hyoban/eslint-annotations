@@ -77,7 +77,7 @@ import { getChangedFiles } from './pullRequest'
 
     if(eslintInput) {
       await Promise.all(eslintInputArray.map(async (file) => {
-        const eslintFile: EslinJsonOutput[] = await JSON.parse(await (await fs.readFile(path.join('./', file))).toString())
+        const eslintFile: EslinJsonOutput[] = await JSON.parse(await (await fs.readFile(path.join(cwd, './', file))).toString())
         const fileAnnotation = await eslintAnnotations(eslintFile, cwd, { prefix: eslintPrefix, allowedFiles: changedFiles })
 
         eslintOutput.highestSeverity = eslintOutput.highestSeverity < fileAnnotation.highestSeverity ?
@@ -106,7 +106,7 @@ import { getChangedFiles } from './pullRequest'
     }
     if(typescriptInput) {
       await Promise.all(typescriptInputArray.map(async (file) => {
-        const typescriptFile = await (await fs.readFile(path.join('./', file))).toString()
+        const typescriptFile = await (await fs.readFile(path.join(cwd, './', file))).toString()
         const fileAnnotation = typescriptAnnotations(typescriptFile, { prefix: typescriptPrefix, allowedFiles: changedFiles })
         
         typescriptOutput.highestSeverity = typescriptOutput.highestSeverity < fileAnnotation.highestSeverity ?
