@@ -77,6 +77,7 @@ import { getChangedFiles } from './pullRequest'
 
     if(eslintInput) {
       await Promise.all(eslintInputArray.map(async (file) => {
+        core.info(`Processing ESLint file: ${file} path: ${path.join(cwd, './', file)}`)
         const eslintFile: EslinJsonOutput[] = await JSON.parse(await (await fs.readFile(path.join(cwd, './', file))).toString())
         const fileAnnotation = await eslintAnnotations(eslintFile, cwd, { prefix: eslintPrefix, allowedFiles: changedFiles })
 
